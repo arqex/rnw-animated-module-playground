@@ -7,14 +7,14 @@ https://www.reddit.com/r/reactnative/comments/b12skv/idea_native_animated_driver
 
 Bootstrapped with https://github.com/joefazz/react-native-web-starter
 
-## Installation
+## Get started
 ```
-
+# fork or clone this repo
+git clone https://github.com/arqex/rnw-animated-module-playground.git
+cd rnw-animated-module-playground
+npm install
+# or yarn
 ```
-
-## Get Started
-
-Clone the branch with the starting point you want and just rename the project (don't forget the `package.json`, Run `git remote rm origin && yarn` to remove the ref to this repo and install node_modules then you're good to go. 🙂
 
 A full list of the scripts defined in `package.json` is shown below.
 
@@ -31,3 +31,7 @@ A full list of the scripts defined in `package.json` is shown below.
 | `yarn test-web`     | Run testing script for web app                          |
 | `yarn test`         | Run both testing scripts                                |
 
+## How do I start?
+The app is a really simple starting point. Once it's loaded, it shows a red square and animates it down 2 seconds later.
+
+Out of the box the animation is not working, because an [empty NativeAnimatedModule](https://github.com/arqex/rnw-animated-module-playground/blob/master/src/NativeAnimatedModule.js) is already added to react-native-web. It contains all the interface methods we need to implement in order to have our native driver working.
