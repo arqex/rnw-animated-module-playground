@@ -1,14 +1,10 @@
 import NativeModules from "react-native/dist/exports/NativeModules/index";
-
-console.warn(NativeModules);
+import manager from './AnimatedNodesManager'
 
 const driver = {
 	createAnimatedNode: function (tag, config) {
-		console.warn(
-			"NativeAnimatedModule for web: createAnimatedNode method not implemented.",
-			tag,
-			config
-		);
+		console.log('Creating node', tag, config )
+		manager.createAnimatedNode( tag, config )
 	},
 	startListeningToAnimatedNodeValue: function (tag) {
 		console.warn(
@@ -37,6 +33,7 @@ const driver = {
 		);
 	},
 	startAnimatingNode: function (animationId, nodeTag, config, endCallback) {
+		manager.propagate( nodeTag, config )
 		console.warn(
 			"NativeAnimatedModule for web: startAnimatingNode method not implemented.",
 			animationId,

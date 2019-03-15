@@ -2,7 +2,7 @@ import './NativeAnimatedModule';
 import React, { Component } from "react";
 import { StyleSheet, View, Animated } from "react-native";
 
-let animatedValue = new Animated.Value(0);
+let animatedValue = new Animated.Value(300);
 
 class App extends Component {
     render() {
@@ -21,7 +21,7 @@ class App extends Component {
         setTimeout(
             () =>
                 Animated.timing(animatedValue, {
-                    toValue: 300,
+                    toValue: 0,
                     duration: 2000,
                     useNativeDriver: true
                 }).start(),
