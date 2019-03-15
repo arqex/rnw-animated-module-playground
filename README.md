@@ -1,6 +1,6 @@
 # React Native Web - Native Animated Module
 
-This is a boilerplate project to work on creating a native module for animated in the browsers. There aren't really native modules for react-native-web, but it would be great if we could implement the NativeAnimatedModule interface in the browser, so we can make the animations run in the GPU just by adding `useNativeDriver: true` in our animations.
+This is a boilerplate project to work on creating a native module for animated in the browsers. There aren't really native modules for react-native-web, but it would be great if we could implement the NativeAnimatedModule interface in the browser, so we can make the animations run in the GPU just by adding `useNativeDriver: true`.
 
 More about this idea and the development:
 https://www.reddit.com/r/reactnative/comments/b12skv/idea_native_animated_driver_for_react_native_web
