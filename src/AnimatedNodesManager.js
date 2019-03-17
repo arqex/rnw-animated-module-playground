@@ -1,8 +1,12 @@
 let nodes = {};
+let animatingTransforms = {};
+
+let currentValues = {}
+
 
 const AnimatedNodesManager = {
 	createAnimatedNode: function( tag, config ){
-		nodes[tag] = { ...config, children: [], parents:[] }
+		nodes[tag] = { ...config, children: [] }
 	},
 	connectAnimatedNodes: function( parentTag, childTag ){
 		nodes[ parentTag ].push( childTag )
@@ -23,14 +27,43 @@ const AnimatedNodesManager = {
 		if( node.type === 'value' ){
 			if (config.type === 'frames') {
 				let nextConfig = { ...config, values: framesToValue( config.frames, node.value, config.toValue ) };
-				console.log( nextConfig )
+				node.children.forEach( c => {
+					nextAnimations.push(
+						this.propagate( c, nextConfig )
+					);
+				});
 			}
-			/*
-			let nextConfig = { ...config, };
-			node.children.forEach( child => {
-				nextAnimations.push(this.propagate(childTag, nextConfig, animations ) )
+		}
+		else if( node.type === 'interpolation' ){
+			let parentValues = config.values;
+			let values = parentValues.map( value => this.interpolate( value, node ) );
+			let nextConfig = {...config, values};
+			node.children.forEach(c => {
+				nextAnimations.push(
+					this.propagate(c, nextConfig)
+				);
 			})
-			*/
+			return nextAnimations;
+		}
+		else if( node.type === 'transform' ){
+			let styleChange = { attrs: ['transform'],  }
+			let nextConfig = { ...node, transform: nodeTag };
+			animatingTransforms[ nodeTag ] = { config }
+			let style = trans
+		}
+		else if( node.type === 'transform' ){
+
+		}
+		else if( node.type === 'style' ){
+			let animation = this.propagate( node.children[0] );
+			animation.prop = 'style';
+			animation.attributes =
+			return animation;
+		}
+		else if( node.type === 'props' ){
+			return {
+				view: node.children[0]
+			}
 		}
 	}
 }

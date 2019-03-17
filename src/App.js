@@ -2,13 +2,17 @@ import './NativeAnimatedModule';
 import React, { Component } from "react";
 import { StyleSheet, View, Animated } from "react-native";
 
-let animatedValue = new Animated.Value(300);
+let animatedValue = new Animated.Value(0);
+let animatedOpacity = animatedValue.interpolate({
+    inputRange: [0, 300],
+    outputRange: [1, .5]
+})
 
 class App extends Component {
     render() {
         let animatedStyles = [
             styles.square,
-            { transform: [{ translateY: animatedValue }] }
+            { transform: [{ translateY: animatedValue }], opacity: animatedOpacity }
         ];
         return (
             <View style={styles.app}>
@@ -18,15 +22,33 @@ class App extends Component {
     }
 
     componentDidMount() {
-        setTimeout(
-            () =>
-                Animated.timing(animatedValue, {
-                    toValue: 0,
-                    duration: 2000,
-                    useNativeDriver: true
-                }).start(),
-            2000
-        );
+        setTimeout(() => {
+            
+            let ani = Animated.timing(animatedValue, {
+                toValue: 300,
+                duration: 2000,
+                useNativeDriver: true
+            })
+            
+
+            /*
+            let ani = Animated.spring(animatedValue, {
+                toValue: 300,
+                duration: 2000,
+                useNativeDriver: true
+            })
+            */
+
+            /*
+            let ani = Animated.decay(animatedValue, {
+                velocity: 100,
+                isInteraction: false,
+                useNativeDriver: true
+            })
+            */
+
+            ani.start()
+        }, 2000 )
     }
 }
 
