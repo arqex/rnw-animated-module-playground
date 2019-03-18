@@ -1,3 +1,4 @@
+// HACK: importing the internal version of Native
 import NativeModules from "react-native/dist/exports/NativeModules/index";
 import manager from './AnimatedNodesManager'
 
@@ -19,11 +20,8 @@ const driver = {
 		);
 	},
 	connectAnimatedNodes: function (parentTag, childTag) {
-		console.warn(
-			"NativeAnimatedModule for web: connectAnimatedNodes method not implemented.",
-			parentTag,
-			childTag
-		);
+		console.log('Connecting nodes', parentTag, childTag )
+		manager.connectAnimatedNodes( parentTag, childTag )
 	},
 	disconnectAnimatedNodes: function (parentTag, childTag) {
 		console.warn(
@@ -33,7 +31,8 @@ const driver = {
 		);
 	},
 	startAnimatingNode: function (animationId, nodeTag, config, endCallback) {
-		manager.propagate( nodeTag, config )
+		let animations = manager.propagate( nodeTag, config )
+		console.log( animations )
 		console.warn(
 			"NativeAnimatedModule for web: startAnimatingNode method not implemented.",
 			animationId,
@@ -75,18 +74,12 @@ const driver = {
 		);
 	},
 	connectAnimatedNodeToView: function (nodeTag, viewTag) {
-		console.warn(
-			"NativeAnimatedModule for web: connectAnimatedNodeToView method not implemented.",
-			nodeTag,
-			viewTag
-		);
+		console.log('Connecting node and view', nodeTag, viewTag )
+		manager.connectAnimatedNodes( nodeTag, viewTag )
 	},
 	disconnectAnimatedNodeFromView: function (nodeTag, viewTag) {
-		console.warn(
-			"NativeAnimatedModule for web: disconnectAnimatedNodeFromView method not implemented.",
-			nodeTag,
-			viewTag
-		);
+		console.log('Connecting node and view', nodeTag, viewTag )
+		manager.connectAnimatedNodes( nodeTag, viewTag )
 	},
 	dropAnimatedNode: function (tag) {
 		console.warn(
@@ -113,3 +106,8 @@ const driver = {
 };
 
 NativeModules.NativeAnimatedModule = driver;
+
+// HACK: importing Animated I can access to internal functions, like interpolation,
+// ideally I should add the interpolate code to the library or ask react-native-web to export it for me
+let Animated = require('react-native').Animated;
+manager.init( Animated );
