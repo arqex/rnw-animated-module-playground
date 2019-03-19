@@ -27,7 +27,7 @@ class App extends Component {
         // Start the scale animation
         Animated.timing( animatedScale, {
             toValue: 1.5,
-            duration: 4,
+            duration: 4000,
             iterations: Infinity,
             useNativeDriver: true
         }).start();

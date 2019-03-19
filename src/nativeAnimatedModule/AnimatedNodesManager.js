@@ -82,7 +82,7 @@ const AnimatedNodesManager = {
 					if( animation.style ){
 						Object.keys( animation.style ).forEach( property => {
 							if( animation.style[property] === nodeTag ){
-								animation.style[ property ] = config;
+								animation.style[property] = { values: nextConfig.values, iterations: nextConfig.iterations };
 							}
 						})
 					}
@@ -100,7 +100,7 @@ const AnimatedNodesManager = {
 				if( animation.style ){
 					Object.keys( animation.style ).forEach( property => {
 						if( animation.style[property] === nodeTag ){
-							animation.style[ property ] = config;
+							animation.style[property] = { values: nextConfig.values, iterations: nextConfig.iterations };
 						}
 					})
 				}
@@ -114,7 +114,7 @@ const AnimatedNodesManager = {
 			let transforms = {};
 			node.transforms.forEach( t => {
 				if( t.type === 'animated' && t.nodeTag === config.valueTag ){
-					transforms[t.property] = config;
+					transforms[t.property] = {values: config.values, iterations: config.iterations};
 				}
 				else {
 					transforms[t.property] = t.nodeTag;
@@ -133,7 +133,8 @@ const AnimatedNodesManager = {
 			let animation = {
 				style: {...node.style},
 				// Style -> Props -> View - this are always 1 to 1 relationships
-				view: nodes[ node.children[0] ].children[0]
+				view: nodes[ node.children[0] ].children[0],
+				frameCount: config.frames.length
 			}
 
 			currentAnimations[ nodeTag ] = animation;
