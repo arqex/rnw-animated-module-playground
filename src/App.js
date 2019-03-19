@@ -1,4 +1,4 @@
-import './NativeAnimatedModule';
+import './nativeAnimatedModule/NativeAnimatedModule';
 import React, { Component } from "react";
 import { StyleSheet, View, Animated } from "react-native";
 
@@ -8,11 +8,13 @@ let animatedOpacity = animatedValue.interpolate({
     outputRange: [1, .5]
 })
 
+let animatedScale = new Animated.Value(1);
+
 class App extends Component {
     render() {
         let animatedStyles = [
             styles.square,
-            { transform: [{ translateY: animatedValue }], opacity: animatedOpacity }
+            { transform: [{ translateY: animatedValue }, { scale: animatedScale}], opacity: animatedOpacity }
         ];
         return (
             <View style={styles.app}>
@@ -22,15 +24,21 @@ class App extends Component {
     }
 
     componentDidMount() {
+        // Start the scale animation
+        Animated.timing( animatedScale, {
+            toValue: 1.5,
+            duration: 4,
+            iterations: Infinity,
+            useNativeDriver: true
+        }).start();
+
         setTimeout(() => {
-            
             let ani = Animated.timing(animatedValue, {
                 toValue: 300,
                 duration: 2000,
                 useNativeDriver: true
             })
             
-
             /*
             let ani = Animated.spring(animatedValue, {
                 toValue: 300,

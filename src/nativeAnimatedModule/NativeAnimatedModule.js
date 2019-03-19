@@ -31,7 +31,7 @@ const driver = {
 		);
 	},
 	startAnimatingNode: function (animationId, nodeTag, config, endCallback) {
-		let animations = manager.propagate( nodeTag, config )
+		let config = manager.getAnimationDefinitions( nodeTag, config )
 		console.log( animations )
 		console.warn(
 			"NativeAnimatedModule for web: startAnimatingNode method not implemented.",

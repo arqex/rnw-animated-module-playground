@@ -1,6 +1,17 @@
+// Here we are going to store the nodes
+// Every node will contain their relationship with others
 let nodes = {};
+
+// Everytime we need to traverse the graph to create new animations
+// we will reset this object, and temporarily save the animations here
+// while calculating their frames.
+// We are animating one AnimatedValue at a time, but it can be used to
+// animated multiple views at once. The keys of this object would be the tags
+// of the nodes to animate and the animation will have the view and the style
+// properties to animate. { styleNodeTag: {style, view} }
 let currentAnimations = {};
 
+// A cache of the animated object passed to the `init` method.
 let Animated;
 
 const AnimatedNodesManager = {
@@ -24,6 +35,40 @@ const AnimatedNodesManager = {
 	},
 	disconnectAnimatedNodeFromView: function( nodeTag, element ){
 		removeFromChildren( nodeTag, element )
+	},
+
+	getAnimationDefinitions( valueTag, config ){
+		currentAnimations = {};
+
+		let animations = this.propagate( valueTag, config );
+		let definitions = [];
+
+		// The styles might have values that are not used by the animation of
+		// the current AnimatedValue. Discard them.
+		for( let styleTag in animations ){
+			let style = animations[styleTag].style
+			for( let property in style ){
+				if( property === 'transform' ){
+					let transform = style.transform
+					for( let transformation in transform ){
+						if( !isAnimated( transform[transformation] ) ){
+							delete transform[transformation];
+						}
+					}
+					if( Object.keys(transform).length === 0 ){
+						delete style.transform;
+					}
+				}
+				else {
+					if( !isAnimated( style[property] ) ){
+						delete style[property];
+					}
+				}
+			}
+			definitions.push( animations[styleTag] );
+		}
+
+		return definitions;
 	},
 	propagate: function( nodeTag, config ){
 		let node = nodes[ nodeTag ]
@@ -116,4 +161,10 @@ function removeFromChildren(nodeTag, child) {
 
 function getInterpolation( config ){
 	return ( new Animated.Value(0) ).interpolate( config )._interpolation;
+}
+
+// Properties that have a numeric value (nodeTags) haven't been translated
+// into animations
+function isAnimated( value ){
+	return isNaN(value);
 }
