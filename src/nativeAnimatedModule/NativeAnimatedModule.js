@@ -1,6 +1,7 @@
 // HACK: importing the internal version of Native
 import NativeModules from "react-native/dist/exports/NativeModules/index";
 import manager from './AnimatedNodesManager'
+import animator from './animators/CSSAnimations'
 
 const driver = {
 	createAnimatedNode: function (tag, config) {
@@ -33,6 +34,9 @@ const driver = {
 	startAnimatingNode: function (animationId, nodeTag, config, endCallback) {
 		let definitions = manager.getAnimationDefinitions( nodeTag, config )
 		console.log( definitions )
+		let animation = animator.createAnimation(definitions)
+		animation.start()
+		console.log( animation )
 		console.warn(
 			"NativeAnimatedModule for web: startAnimatingNode method not implemented.",
 			animationId,
