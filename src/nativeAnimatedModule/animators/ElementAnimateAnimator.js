@@ -1,7 +1,11 @@
 // This animator uses Element.animate that is supported by more browsers
 // https://developers.google.com/web/updates/2014/05/Web-Animations-element-animate-is-now-in-Chrome-36
 
+import utils from '../NAMUtils'
 
+
+// We will probably want create a class for the Animations,
+// so we can share the methods in the prototype among animation instances
 const Animator = {
 	createAnimation: function( definitions ){
 		let frameDescriptions = createWebAnimations( definitions );
@@ -34,52 +38,8 @@ function createWebAnimations( definitions ){
 	return definitions.map( def => {
 		return {
 			view: def.view,
-			frames: createKeyFrames( def.style, def.frameCount ),
+			frames: utils.createKeyFrames( def.style, def.frameCount ),
 			duration: Math.abs( def.frameCount / 60 * 1000 )
 		}
 	})
-}
-
-function createKeyFrames( styles, frameCount ){
-	let keyFrames = [];
-
-	for( let i = 0; i < frameCount; i++ ){
-		let frame = {};
-		for( let property in styles ){
-			if( property === 'transform' ){
-				let kf = ''
-
-				for( let t in styles.transform ){
-					kf += getTransform( t, styles.transform[t].values[i] )
-				}
-
-				frame.transform = kf
-			}
-			else {
-				frame[ property ] = styles[property].values[i];
-			}
-		}
-
-		keyFrames.push( frame );
-	}
-
-	return keyFrames;
-}
-
-const units = {
-	rotate: '',
-	rotateX: '',
-	rotateY: '',
-	rotateZ: '',
-	scale: '',
-	scaleX: '',
-	scaleY: '',
-	translateX: 'px',
-	translateY: 'px',
-	skewX: '',
-	skewY: ''
-}
-
-function getTransform( type, value ){
-	return type + '(' + value + units[type] + ') '
 }

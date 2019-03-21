@@ -1,7 +1,7 @@
 // This animator tries to use the second syntax specified in
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Keyframe_Formats
 // for creating the animation object that we can start, stop and reset
-// It doesn't work very well. Only firefox can move the object without really animating the movement
+// It doesn't work very well. Only firefox can move the object. Animations don't add up
 
 const Animator = {
 	createAnimation: function( definitions ){

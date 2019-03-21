@@ -1,6 +1,11 @@
 // This animator uses CSS animations, cross-browser support is really nice for it
+// It creates the @keyframes definition and appends it to the page <head>
+
+import utils from '../NAMUtils'
 
 
+// We will probably want create a class for the Animations,
+// so we can share the methods in the prototype among animation instances
 const Animator = {
 	createAnimation: function( definitions ){
 		let cssAnimations = createCSSAnimations( definitions );
@@ -50,7 +55,7 @@ function createKeyFrames( styles, frameCount ){
 				let kf = 'transform: '
 
 				for( let t in styles.transform ){
-					kf += getTransform( t, styles.transform[t].values[i] )
+					kf += utils.getTransform( t, styles.transform[t].values[i] )
 				}
 
 				frame += kf + ';\n'
@@ -64,24 +69,6 @@ function createKeyFrames( styles, frameCount ){
 	}
 
 	return keyFrames;
-}
-
-const units = {
-	rotate: '',
-	rotateX: '',
-	rotateY: '',
-	rotateZ: '',
-	scale: '',
-	scaleX: '',
-	scaleY: '',
-	translateX: 'px',
-	translateY: 'px',
-	skewX: '',
-	skewY: ''
-}
-
-function getTransform( type, value ){
-	return type + '(' + value + units[type] + ') '
 }
 
 function setAnimationsIntoDOM( animations ){

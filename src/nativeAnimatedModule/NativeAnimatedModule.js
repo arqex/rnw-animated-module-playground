@@ -1,7 +1,7 @@
 // HACK: importing the internal version of Native
 import NativeModules from "react-native/dist/exports/NativeModules/index";
 import manager from './AnimatedNodesManager'
-import animator from './animators/CSSAnimations'
+import animator from './animators/CSSAnimator'
 
 const driver = {
 	createAnimatedNode: function (tag, config) {
