@@ -1,7 +1,7 @@
 // HACK: importing the internal version of Native
 import NativeModules from "react-native/dist/exports/NativeModules/index";
 import manager from './AnimatedNodesManager'
-import animator from './animators/CSSAnimator'
+import animator from './animators/CSSAnimator2'
 
 const driver = {
 	createAnimatedNode: function (tag, config) {
@@ -34,7 +34,8 @@ const driver = {
 	startAnimatingNode: function (animationId, nodeTag, config, endCallback) {
 		let definitions = manager.getAnimationDefinitions( nodeTag, config )
 		console.log( definitions )
-		let animation = animator.createAnimation(definitions)
+		// let animation = animator.createAnimation(definitions)
+		let animation = new animator( definitions )
 		animation.start()
 		console.log( animation )
 		console.warn(
